@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+include /usr/share/dpkg/default.mk
+
+MAJOR := $(firstword $(subst ., ,$(DEB_VERSION_UPSTREAM)))
+PKG := nexus-$(subst +,-,$(DEB_VERSION_UPSTREAM)).tar.gz
+URL := http://download.sonatype.com/nexus/$(MAJOR)/$(PKG)
+
+prefix := debian/ins-nexus-oss/opt/ins-nexus-oss
+
+%:
+	dh $@
+
+override_dh_auto_build: $(PKG)
+
+$(PKG):
+	wget --no-verbose $(URL)
+
+override_dh_auto_install:
+	cd $(prefix) && tar -xf $(CURDIR)/$(PKG) --strip-components 1 --exclude 'sonatype-work/*'
+
+	cp -a --no-target-directory $(prefix)/etc debian/ins-nexus-oss/etc/ins-nexus-oss/
+	$(RM) -r $(prefix)/etc
+	ln -s /etc/ins-nexus-oss $(prefix)/etc
+
+	mv $(prefix)/bin/nexus.vmoptions debian/ins-nexus-oss/etc/ins-nexus-oss/
+	ln -s /etc/ins-nexus-oss/nexus.vmoptions $(prefix)/bin/nexus.vmoptions
+
+override_dh_installinit:
+	dh_installinit --onlyscripts

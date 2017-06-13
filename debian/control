@@ -1,0 +1,16 @@
+Source: ins-nexus-oss
+Section: java
+Priority: extra
+Maintainer: Michael Weber <mweber@instartlogic.com>
+Build-Depends: debhelper (>= 9),
+ ca-certificates,
+ tar,
+ wget
+Standards-Version: 3.9.2
+Homepage: https://www.sonatype.com/nexus-repository-oss
+
+Package: ins-nexus-oss
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ins-oracle-jdk
+Description: Nexus Repository OSS
+ The world's only repository manager with FREE support for popular formats.
