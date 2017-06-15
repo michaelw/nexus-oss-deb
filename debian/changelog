@@ -1,3 +1,10 @@
+ins-nexus-oss (3.3.1+01+unix-2) xenial; urgency=low
+
+  * create/use user nexus
+  * create /opt/sonatype-work/ and chown to nexus
+
+ -- Michael Weber <mweber@instartlogic.com>  Wed, 14 Jun 2017 19:38:39 -0700
+
 ins-nexus-oss (3.3.1+01+unix-1) unstable; urgency=low
 
   * Initial release

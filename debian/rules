@@ -30,9 +30,11 @@ override_dh_auto_install:
 	cp -a --no-target-directory $(prefix)/etc debian/ins-nexus-oss/etc/ins-nexus-oss/
 	$(RM) -r $(prefix)/etc
 	ln -s /etc/ins-nexus-oss $(prefix)/etc
+	ln -sf /etc/default/ins-nexus-oss $(prefix)/bin/nexus.rc
 
 	mv $(prefix)/bin/nexus.vmoptions debian/ins-nexus-oss/etc/ins-nexus-oss/
 	ln -s /etc/ins-nexus-oss/nexus.vmoptions $(prefix)/bin/nexus.vmoptions
 
 override_dh_installinit:
+	dh_installinit # install default
 	dh_installinit --onlyscripts
